@@ -10,7 +10,7 @@ api = flask.Flask(__name__)
 # 'index'是接口路径，methods不写，默认get请求
 # get方式访问
 @api.route('/', methods=['get', 'post'])
-def all_rand():
+def rand_pwd():
     # url参数格式：? l=20 & s=1 & c=1 & k=free
     # l 表示随机数的长度
     # s 表示是否包括标点符号等其他字符
@@ -37,8 +37,7 @@ def all_rand():
     return json.dumps(res, ensure_ascii=False)
 
 
-if __name__ == '__main__':
-    # api.run(port=5000, host='127.0.0.1')
-    server = pywsgi.WSGIServer(('0.0.0.0', 5000), api)
-    server.serve_forever()
-    api.run()
+# api.run(port=5000, host='127.0.0.1')
+server = pywsgi.WSGIServer(('0.0.0.0', 5000), api)
+server.serve_forever()
+api.run()
