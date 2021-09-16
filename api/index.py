@@ -1,4 +1,5 @@
-import flask
+# import flask
+from flask import Flask, Response, request
 import json
 import random
 import string
@@ -6,7 +7,7 @@ from gevent import pywsgi
 # from util import rand_pin
 
 # 实例化api，把当前这个python文件当作一个服务，__name__代表当前这个python文件
-app = flask.Flask(__name__)
+app = Flask(__name__)
 
 
 def rand_pin(para: dict) -> list:
@@ -63,34 +64,43 @@ def rand_pin(para: dict) -> list:
 
 # 'index'是接口路径，methods不写，默认get请求
 # get方式访问
-@app.route('/', methods=['get', 'post'])
-def rand_pwd():
-    # url参数格式：? l=20 & s=1 & c=1 & k=free
-    # l 表示随机数的长度
-    # s 表示是否包括标点符号等其他字符
-    # c 表示字母是否有大写
-    # k 表示是否包含关键字
-    # n 表示生成的个数
+# @app.route('/', methods=['get', 'post'])
+# def rand_pwd():
+#     # url参数格式：? l=20 & s=1 & c=1 & k=free
+#     # l 表示随机数的长度
+#     # s 表示是否包括标点符号等其他字符
+#     # c 表示字母是否有大写
+#     # k 表示是否包含关键字
+#     # n 表示生成的个数
+#
+#     l = request.args.get('l', 15)
+#     s = request.args.get('s', 0)
+#     c = request.args.get('c', 1)
+#     k = request.args.getlist('k')
+#     n = request.args.get('n', 1)
+#     para = {
+#         'length': int(l),
+#         'special': int(s),
+#         'capital': int(c),
+#         'key': k,
+#         'n': int(n)
+#     }
+#     res = {
+#         'pwd': rand_pin(para),
+#         'status': 200
+#     }
+#     return json.dumps(res, ensure_ascii=False)
 
-    l = flask.request.args.get('l', 15)
-    s = flask.request.args.get('s', 0)
-    c = flask.request.args.get('c', 1)
-    k = flask.request.args.getlist('k')
-    n = flask.request.args.get('n', 1)
-    para = {
-        'length': int(l),
-        'special': int(s),
-        'capital': int(c),
-        'key': k,
-        'n': int(n)
-    }
-    res = {
-        'pwd': rand_pin(para),
-        'status': 200
-    }
-    return json.dumps(res, ensure_ascii=False)
+
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def catch_all(path):
+    print(request.args)
+    key = request.args.get('key')
+    return Response("<h1>Flask</h1><p>You visited: /%s</p><p>key=%s</p>" % (path, key), mimetype="text/html")
 
 
-server = pywsgi.WSGIServer(('0.0.0.0', 5000), app)
-server.serve_forever()
-app.run()
+if __name__ == "__main__":
+    server = pywsgi.WSGIServer(('0.0.0.0', 5000), app)
+    server.serve_forever()
+    app.run()
