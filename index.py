@@ -1,5 +1,6 @@
 import flask
 import json
+from gevent import pywsgi
 from util import rand_pin
 
 # 实例化api，把当前这个python文件当作一个服务，__name__代表当前这个python文件
@@ -37,4 +38,6 @@ def all_rand():
 
 
 if __name__ == '__main__':
-    api.run(port=8888, debug=True, host='127.0.0.1')
+    # api.run(port=5000, host='127.0.0.1')
+    server = pywsgi.WSGIServer(('0.0.0.0', 5000), api)
+    server.serve_forever()
