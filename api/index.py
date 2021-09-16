@@ -92,8 +92,8 @@ def rand_pin(para: dict) -> list:
 #     return json.dumps(res, ensure_ascii=False)
 
 
-@app.route('/', defaults={'path': ''})
-@app.route('/<path:path>')
+@app.route('/')
+# @app.route('/<path:path>')
 def catch_all(path):
     print(request.args)
     key = request.args.get('key')
