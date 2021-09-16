@@ -8,8 +8,8 @@ api = flask.Flask(__name__)
 
 
 # 'index'是接口路径，methods不写，默认get请求
-@api.route('/', methods=['get', 'post'])
 # get方式访问
+@api.route('/', methods=['get', 'post'])
 def all_rand():
     # url参数格式：? l=20 & s=1 & c=1 & k=free
     # l 表示随机数的长度
