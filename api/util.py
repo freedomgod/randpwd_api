@@ -1,6 +1,5 @@
 import random
 import string
-from collections import Iterable
 
 
 def rand_pin(para: dict) -> list:
