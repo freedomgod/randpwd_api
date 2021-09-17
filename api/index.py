@@ -1,15 +1,10 @@
-from flask import Flask, request, send_from_directory, Response
+from flask import Flask, request, Response
 import json
 from gevent import pywsgi
 from api.util import rand_pin
 
 # 实例化api，把当前这个python文件当作一个服务，__name__代表当前这个python文件
 app = Flask(__name__)
-
-
-@app.route('/favicon.ico')  # 设置icon
-def favicon():
-    return send_from_directory(app.root_path, 'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 
 # 'index'是接口路径，methods不写，默认get请求
@@ -29,10 +24,10 @@ def rand_pwd():
     k = request.args.getlist('k')
     n = request.args.get('n', 1)
     para = {
-        'length': int(l),
-        'special': int(s),
-        'capital': int(c),
-        'key': k,
+        'l': int(l),
+        's': int(s),
+        'c': int(c),
+        'k': k,
         'n': int(n)
     }
     res = {
@@ -45,5 +40,4 @@ def rand_pwd():
 if __name__ == "__main__":
     server = pywsgi.WSGIServer(('0.0.0.0', 5000), app)
     server.serve_forever()
-    app.add_url_rule('/favicon.ico', view_func=favicon)
     app.run()
