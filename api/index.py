@@ -14,7 +14,7 @@ def favicon():
 
 # 'index'是接口路径，methods不写，默认get请求
 # get方式访问
-@app.route('/', methods=['get', 'post'])
+@app.route('/api', methods=['get', 'post'])
 def rand_pwd():
     # url参数格式：? l=20 & s=1 & c=1 & k=free & n=5
     # l 表示随机数的长度
@@ -45,4 +45,5 @@ def rand_pwd():
 if __name__ == "__main__":
     server = pywsgi.WSGIServer(('0.0.0.0', 5000), app)
     server.serve_forever()
+    app.add_url_rule('/favicon.ico', view_func=favicon)
     app.run()
