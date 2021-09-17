@@ -1,4 +1,4 @@
-from flask import Flask, request, send_from_directory
+from flask import Flask, request, send_from_directory, Response
 import json
 from gevent import pywsgi
 from api.util import rand_pin
@@ -40,7 +40,8 @@ def rand_pwd():
         'pwd': rand_pin(para),
         'status': 200
     }
-    return json.dumps(res, ensure_ascii=False)
+    # return json.dumps(res, ensure_ascii=False)
+    return Response(json.dumps(res), content_type='application/json')
 
 
 if __name__ == "__main__":
