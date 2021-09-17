@@ -1,6 +1,5 @@
 import random
 import string
-import pyperclip
 
 
 def rand_pin(para: dict) -> list:
@@ -53,5 +52,4 @@ def rand_pin(para: dict) -> list:
         random.shuffle(pin_lis)
         tmp = ''.join(pin_lis)
         pin.append(tmp)
-    pyperclip.copy(pin[0])  # 自动复制生成的第一条密码
     return pin
