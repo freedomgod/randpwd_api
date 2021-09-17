@@ -15,8 +15,8 @@ def favicon():
 # 'index'是接口路径，methods不写，默认get请求
 # get方式访问
 @app.route('/', methods=['get', 'post'])
-@app.route('/<path:path>')
-def rand_pwd(path):
+# @app.route('/<path:path>')
+def rand_pwd():
     # url参数格式：? l=20 & s=1 & c=1 & k=free & n=5
     # l 表示随机数的长度
     # s 表示是否包括标点符号等其他字符
